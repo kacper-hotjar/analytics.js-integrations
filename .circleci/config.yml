@@ -16,7 +16,7 @@ jobs:
             if [[ ${LAST_SUCCESSFUL_COMMIT} == "null" ]]; then
               COMMITS=`git rev-parse origin/master`
             else
-              COMMITS="${CIRCLE_SHA1}..${origin/master}"
+              COMMITS="${CIRCLE_SHA1}..${LAST_SUCCESSFUL_COMMIT}"
             fi
             echo -e "these commits ${COMMITS}"
             git diff --name-only $COMMITS | cut -d/ -f1 | sort -u > projects
