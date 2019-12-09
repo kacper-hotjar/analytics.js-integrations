@@ -1,6 +1,5 @@
-"test if this fails ci"
 env:
-  SEGMENT_CONTEXTS: "snyk,npm,aws-credentials,ecr,saucelabs"
+  SEGMENT_CONTEXTS: "snyk,npm,aws-credentials,ecr"
 steps:
   - label: ":hammer: Build and Test"
     command:
