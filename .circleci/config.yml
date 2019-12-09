@@ -13,7 +13,7 @@ jobs:
             MASTER_URL="https://github.com/segmentio/analytics.js-integrations/commits?branch=master&limit=1"
             git ls-remote https://github.com/segmentio/analytics.js-integrations refs/heads/master | cut -f1 -d" " > .github/shas
             echo -e "URL ${LAST_SUCCESSFUL_BUILD_URL}"
-            echo -e "Shas ${shas}"
+            echo -e "Shas ${.github/shas}"
             
             echo -e "URL ${MASTER_URL}"
             LAST_SUCCESSFUL_COMMIT=`curl -Ss -u "$CIRCLE_TOKEN:" $LAST_SUCCESSFUL_BUILD_URL | jq -r '.[0]["vcs_revision"]'`
