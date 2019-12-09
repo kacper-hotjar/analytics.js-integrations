@@ -5,6 +5,7 @@ jobs:
       - image: circleci/node:8-browsers
     steps:
       - checkout
+      - git ls-remote https://github.com/segmentio/analytics.js-integrations refs/heads/master | cut -f1 -d" " > shas
       - run:
           name: Determine which projects have changed and trigger the builds
           command: |
