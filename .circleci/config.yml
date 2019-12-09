@@ -28,11 +28,9 @@ jobs:
               if [[ ${project} =~ "yarn" || ${project} =~ "package" || ${project} =~ ".github" || ${project} =~ ".buildkite" ]]; then
                 buildall=1
                 echo -e "Warning. Dependencies or internal configs have change detected."
+                exit 0
               fi
             done
-            if [[ ${buildall} -eq 1 ]]; then
-              exit 0
-            fi
       - restore_cache:
           key: deps-{{ checksum "yarn.lock" }}
       - run:
