@@ -5,17 +5,16 @@ jobs:
       - image: circleci/node:8-browsers
     steps:
       - checkout
-      - git ls-remote https://github.com/segmentio/analytics.js-integrations refs/heads/master > shas
       - run:
           name: Determine which projects have changed and trigger the builds
           command: |
             # Identify modified directories
             LAST_SUCCESSFUL_BUILD_URL="https://circleci.com/api/v1.1/project/github/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/tree/master?filter=completed&limit=1"
             MASTER_URL="https://github.com/segmentio/analytics.js-integrations/commits?branch=master&limit=1"
-
+            git ls-remote https://github.com/segmentio/analytics.js-integrations refs/heads/master > shas
             echo -e "URL ${LAST_SUCCESSFUL_BUILD_URL}"
             echo -e "Shas ${shas}"
-
+            
             echo -e "URL ${MASTER_URL}"
             LAST_SUCCESSFUL_COMMIT=`curl -Ss -u "$CIRCLE_TOKEN:" $LAST_SUCCESSFUL_BUILD_URL | jq -r '.[0]["vcs_revision"]'`
 
