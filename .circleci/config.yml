@@ -27,11 +27,11 @@ jobs:
             for project in `cat projects`; do
               if [[ ${project} =~ "yarn" || ${project} =~ "package" || ${project} =~ ".github" ]]; then
                 buildall=1
-                echo -e "Warning - Dependencies change detected."
+                echo -e "Warning. Dependencies change detected."
               fi
               if [[ ${project} =~ ".buildkit"]]; then
                 configall=1
-                echo -e "Warning - Internal config files have changed"
+                echo -e "Warning. Internal config files have changed"
               fi
               if [[ ${buildall} -eq 1 || ${configall} -eq 1 ]]; then
                 exit 0
