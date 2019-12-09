@@ -14,7 +14,7 @@ jobs:
             
             #first commit in a branch
             if [[ ${LAST_SUCCESSFUL_COMMIT} == "null" ]]; then
-              COMMITS="origin/master"
+              COMMITS=`git rev-parse origin/master`
             else
               COMMITS="${CIRCLE_SHA1}..${origin/master}"
             fi
