@@ -21,18 +21,18 @@ jobs:
             git diff --name-only $COMMITS | cut -d/ -f1 | sort -u > projects
             echo -e "Modified directories:\n`cat projects`\n"
 
-            # If modified directories contain yarn, operations, compiler, buildkite directores, build all projects and exit
+            # If modified directories contain yarn, operations, compiler, buildkite directores, exit
             buildall=0
-            configall=0 
+            # configall=0 
             for project in `cat projects`; do
-              if [[ ${project} =~ "yarn" || ${project} =~ "package" || ${project} =~ ".github" ]]; then
+              if [[ ${project} =~ "yarn" || ${project} =~ "package" || ${project} =~ ".github" || ${project} =~ ".buildkite" ]]; then
                 buildall=1
-                echo -e "Warning. Dependencies change detected."
+                echo -e "Warning. Dependencies or internal configs have change detected."
               fi
-              if [[ ${project} =~ ".buildkit"]]; then
-                configall=1
-                echo -e "Warning. Internal config files have changed"
-              fi
+              # if [[ ${project} =~ ".buildkite"]]; then
+              #   configall=1
+              #   echo -e "Warning. Internal config files have changed"
+              # fi
               if [[ ${buildall} -eq 1 || ${configall} -eq 1 ]]; then
                 exit 0
               fi
