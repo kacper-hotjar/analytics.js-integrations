@@ -1,5 +1,5 @@
 env:
-  SEGMENT_CONTEXTS: "snyk,npm,aws-credentials,ecr,saucelabs,someother_context"
+  SEGMENT_CONTEXTS: "snyk,npm,aws-credentials,ecr,saucelabs"
 steps:
   - label: ":hammer: Build and Test"
     command:
