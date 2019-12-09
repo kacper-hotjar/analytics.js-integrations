@@ -10,15 +10,20 @@ jobs:
           command: |
             # Identify modified directories
             LAST_SUCCESSFUL_BUILD_URL="https://circleci.com/api/v1.1/project/github/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/tree/$CIRCLE_BRANCH?filter=completed&limit=1"
-            LAST_SUCCESSFUL_COMMIT_MASTER=""https://circleci.com/api/v1.1/project/github/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/tree/master?filter=completed&limit=1""
+            LAST_SUCCESSFUL_COMMIT=`curl -Ss -u "$CIRCLE_TOKEN:" $LAST_SUCCESSFUL_BUILD_URL | jq -r '.[0]["vcs_revision"]'`
             
-            COMMITS="origin/master"
+            #first commit in a branch
+            if [[ ${LAST_SUCCESSFUL_COMMIT} == "null" ]]; then
+              COMMITS="origin/master"
+            else
+              COMMITS="${CIRCLE_SHA1}..${LAST_SUCCESSFUL_COMMIT}"
+            fi
+            echo -e "these commits ${COMMITS}"
             git diff --name-only $COMMITS | cut -d/ -f1 | sort -u > projects
             echo -e "Modified directories:\n`cat projects`\n"
 
             # If modified directories contain yarn, operations, compiler, buildkite directores, exit
             buildall=0
-            # configall=0 
             for project in `cat projects`; do
               if [[ ${project} =~ "yarn" || ${project} =~ "package" || ${project} =~ ".github" || ${project} =~ ".buildkite" ]]; then
                 buildall=1
