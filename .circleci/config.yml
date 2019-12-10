@@ -17,12 +17,12 @@ jobs:
             MASTER_COMMIT=`cat master`
 
             #first commit in a branch
-            if [[ ${LAST_SUCCESSFUL_COMMIT} ]]; then
-              COMMITS="${CIRCLE_SHA1}..${LAST_SUCCESSFUL_COMMIT}"
-            else
+            # if [[ ${LAST_SUCCESSFUL_COMMIT} ]]; then
+            #   COMMITS="${CIRCLE_SHA1}..${LAST_SUCCESSFUL_COMMIT}"
+            # else
               COMMITS="${CIRCLE_SHA1}..${MASTER_COMMIT}"
-            fi
-            
+            # fi
+
             #Check the diff on the commits 
             git diff --name-only $COMMITS | cut -d/ -f1 | sort -u > projects
             echo -e "Modified directories:\n`cat projects`\n"
